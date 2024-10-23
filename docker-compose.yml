@@ -19,12 +19,12 @@ services:
   web:
     restart: always
     build: .
-    command: sh -c "uvicorn main:app --reload --port=8001  --host=0.0.0.0"
+    command: sh -c "poetry run uvicorn app.main:app --reload --port=8001  --host=0.0.0.0"
     networks:
       - fast_api_net
       - redis_net
     volumes:
-      - ./app:/app
+      - .:/app
   redis:
     image: "redis:alpine"
     networks:
