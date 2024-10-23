@@ -15,12 +15,10 @@ class ReviewRequest(BaseModel):
 async def review_code(request: ReviewRequest):
     try:
         repo_files_content, repo_file_structure = await fetch_repository_files(request.github_repo_url)
-        print(repo_files_content)
-        
+
         review_result = await analyze_code(
             repo_files_content, request.assignment_description, request.candidate_level
         )
-        print(repo_file_structure)
         return f"{repo_file_structure}\n\n\nReview Result:\n{review_result}"
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
