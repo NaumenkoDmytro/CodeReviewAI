@@ -1,7 +1,9 @@
 import openai
 from app.utils.cache import get_cached_data, set_cached_data, generate_cache_key
+from app.settings import OPENAI_API_KEY
 
-openai.api_key = "YOUR_OPENAI_API_KEY"
+
+openai.api_key = OPENAI_API_KEY
 
 async def analyze_code(repo_files, assignment_description, candidate_level):
     # Generate a unique cache key for the OpenAI request based on inputs

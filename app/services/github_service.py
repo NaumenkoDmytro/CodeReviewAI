@@ -1,9 +1,8 @@
 import httpx
 from fastapi import HTTPException
 from app.utils.cache import get_cached_data, set_cached_data, generate_cache_key
-import os
+from app.settings import GITHUB_API_TOKEN
 
-GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
 
 async def fetch_repository_files(repo_url: str):
     # Generate a unique cache key for the repository

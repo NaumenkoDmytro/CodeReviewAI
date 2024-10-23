@@ -1,7 +1,8 @@
 import aioredis
 import json
+from app.settings import REDIS_URL
 
-redis = aioredis.from_url("redis://localhost")
+redis = aioredis.from_url(REDIS_URL)
 
 # Helper function to generate cache keys based on function inputs
 def generate_cache_key(key_prefix: str, *args):
