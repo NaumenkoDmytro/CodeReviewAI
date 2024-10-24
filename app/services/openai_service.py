@@ -6,6 +6,22 @@ from app.settings import logger
 
 
 async def analyze_code(repo_files, assignment_description, candidate_level):
+    """
+    Asynchronous function to analyze code from a GitHub repository using OpenAI's API based on a specified assignment and developer level.
+
+    This function checks the cache for a previously stored analysis result. If found, the cached analysis is returned.
+    If no cached data exists, it sends a request to the OpenAI API to perform a code review based on the provided coding assignment,
+    candidate's level, and the code from the repository. The analysis includes downsides/comments, a rating, and a conclusion.
+    The result is then cached for future use.
+
+    Parameters:
+    repo_files (str): A string containing the code from all files in the GitHub repository.
+    assignment_description (str): A description of the coding task/assignment that is being reviewed.
+    candidate_level (str): The experience level of the candidate (e.g., junior, mid-level, senior).
+
+    Returns:
+    str: The analysis result provided by the OpenAI API, including downsides/comments, a rating, and a conclusion.
+    """
     client = OpenAI(api_key=OPENAI_API_KEY)
     cache_key = generate_cache_key(
         "openai_analysis", assignment_description, candidate_level
@@ -30,7 +46,7 @@ async def analyze_code(repo_files, assignment_description, candidate_level):
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4-turbo",
             messages=[{"role": "user", "content": prompt}],
         )
     except Exception as e:

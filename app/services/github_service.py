@@ -6,6 +6,21 @@ from app.settings import logger
 
 
 async def fetch_repository_files(repo_url: str):
+    """
+    Asynchronous function to fetch files from a GitHub repository by its URL.
+
+    This function checks the cache for stored repository data.
+    If cached data is found, it retrieves and returns them.
+    If no cached data exists, it sends a request to the GitHub API to fetch the repository's file list,
+    then it retrieves the content of these files. After fetching the data, it caches the result.
+
+    Parameters:
+    repo_url (str): The URL of the GitHub repository in the format "https://github.com/owner/repo".
+
+    Returns:
+    tuple: The first part is the content of all the files from the repository,
+           the second part is a formatted list of the files with their names.
+    """
     cache_key = generate_cache_key("github_repo", repo_url)
 
     cached_data = await get_cached_data(cache_key)
@@ -61,6 +76,22 @@ async def fetch_repository_files(repo_url: str):
 
 
 async def fetch_all_files(client, contents, headers, file_list=[]):
+    """
+    Asynchronous recursive function to retrieve all files from a GitHub repository, including those in subdirectories.
+
+    This function iterates through the repository's contents. If an item is a file, it adds the file's path and download URL
+    to the `file_list`. If the item is a directory, it recursively fetches the contents of the directory and continues
+    processing them until all files have been found.
+
+    Parameters:
+    client (httpx.AsyncClient): The HTTP client used to make requests to the GitHub API.
+    contents (list): The list of items (files and directories) from the GitHub repository.
+    headers (dict): HTTP headers including authorization and content type for the GitHub API request.
+    file_list (list, optional): A list that accumulates file paths and download URLs. Defaults to an empty list.
+
+    Returns:
+    list: A list of dictionaries containing file paths and download URLs for all files in the repository.
+    """
     for item in contents:
         if item["type"] == "file":
             file_list.append(
@@ -83,6 +114,20 @@ async def fetch_all_files(client, contents, headers, file_list=[]):
 
 
 async def fetch_file_content(client, file_url, headers):
+    """
+    Asynchronous function to fetch the content of a file from a GitHub repository using its download URL.
+
+    This function sends a request to the provided file's download URL and retrieves its content.
+    If the request fails, it logs the error and raises an HTTPException.
+
+    Parameters:
+    client (httpx.AsyncClient): The HTTP client used to make the request to the file's URL.
+    file_url (str): The download URL of the file from the GitHub repository.
+    headers (dict): HTTP headers, including authorization and content type for the GitHub API request.
+
+    Returns:
+    str: The textual content of the file.
+    """
     file_response = await client.get(file_url, headers=headers)
     if file_response.status_code != 200:
         logger.error(f"GitHub API returned an error: {file_response.json()}")
