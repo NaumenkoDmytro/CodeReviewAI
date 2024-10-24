@@ -23,8 +23,13 @@ This project is a backend service designed to automate code reviews by integrati
 `cd CodeReviewAI`
 
 2. Create a `.env` file based on the `app/env_example` file and add your credentials:
+```env
 `cp app/env_example .env`
+
+
 3. Update the `.env` file with your OpenAI API key and GitHub token:
+```bash
 `OPENAI_API_KEY=your-openai-api-key`
 `GITHUB_API_TOKEN=your-github-token`
+
 
