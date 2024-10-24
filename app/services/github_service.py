@@ -5,7 +5,7 @@ from app.settings import GITHUB_API_TOKEN
 from app.settings import logger
 
 
-async def fetch_repository_files(repo_url: str):
+async def fetch_repository_files(repo_url: str) -> tuple:
     """
     Asynchronous function to fetch files from a GitHub repository by its URL.
 
@@ -75,7 +75,9 @@ async def fetch_repository_files(repo_url: str):
         return content_from_files, formatted_files
 
 
-async def fetch_all_files(client, contents, headers, file_list=[]):
+async def fetch_all_files(
+    client: httpx.AsyncClient, contents: list, headers: dict, file_list=[]
+) -> list:
     """
     Asynchronous recursive function to retrieve all files from a GitHub repository, including those in subdirectories.
 
@@ -113,7 +115,9 @@ async def fetch_all_files(client, contents, headers, file_list=[]):
     return file_list
 
 
-async def fetch_file_content(client, file_url, headers):
+async def fetch_file_content(
+    client: httpx.AsyncClient, file_url: str, headers: dict
+) -> str:
     """
     Asynchronous function to fetch the content of a file from a GitHub repository using its download URL.
 

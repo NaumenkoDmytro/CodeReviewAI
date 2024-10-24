@@ -5,7 +5,9 @@ from app.settings import OPENAI_API_KEY
 from app.settings import logger
 
 
-async def analyze_code(repo_files, assignment_description, candidate_level):
+async def analyze_code(
+    repo_files: str, assignment_description: str, candidate_level: str
+) -> str:
     """
     Asynchronous function to analyze code from a GitHub repository using OpenAI's API based on a specified assignment and developer level.
 
