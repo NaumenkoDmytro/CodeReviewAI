@@ -33,3 +33,25 @@ OPENAI_API_KEY=your-openai-api-key
 GITHUB_API_TOKEN=your-github-token
 ```
 
+### Launch
+
+This project is supposed to be built in docker, so after the installation steps, you need to run the following:
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+The service should now be accessible at `http://localhost:8000`
+
+### Tests
+
+For tests you need to run the following:
+```bash
+docker-compose exec web poetry run pytest --cov=app --cov-report=term-missing
+```
+
+
+## Scaling ideas (Part2)
+Handling Large Repositories: For large repositories, you can paginate the GitHub API results and review them in chunks. Use GitHub's pagination mechanism (using Link headers).
+Handling Large Volumes of Requests: Use task queues like Celery for processing reviews asynchronously and Redis as a message broker. This will help to offload long-running reviews and allow scaling.
+OpenAI API Limits: For large repositories, you may split the repository's content into multiple OpenAI requests and combine the results. Respect rate limits by implementing retry logic and exponential backoff.
