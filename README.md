@@ -19,17 +19,16 @@ This project is a backend service designed to automate code reviews by integrati
 
 1. Clone the repository:
 ```bash
-`git clone https://github.com/NaumenkoDmytro/CodeReviewAI.git`
-`cd CodeReviewAI`
-
+git clone https://github.com/NaumenkoDmytro/CodeReviewAI.git
+cd CodeReviewAI
+```
 2. Create a `.env` file based on the `app/env_example` file and add your credentials:
 ```env
-`cp app/env_example .env`
-
-
-3. Update the `.env` file with your OpenAI API key and GitHub token:
+cp app/env_example .env
+```
+3. Update the .env file with your OpenAI API key and GitHub token:
 ```bash
-`OPENAI_API_KEY=your-openai-api-key`
-`GITHUB_API_TOKEN=your-github-token`
-
+OPENAI_API_KEY=your-openai-api-key
+GITHUB_API_TOKEN=your-github-token
+```
 
