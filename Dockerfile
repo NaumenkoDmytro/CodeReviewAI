@@ -11,5 +11,3 @@ WORKDIR /app
 COPY pyproject.toml  ./
 
 RUN poetry install --no-root
-
-# CMD ["poetry", "run", "uvicorn", "app.main:app", "--reload"]
