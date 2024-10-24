@@ -10,7 +10,7 @@ This project is a backend service designed to automate code reviews by integrati
 * Supports Redis caching for efficient API call management.
 
 ## Setup
-### Installation
+### Prerequisites
 * Docker and Docker Compose installed.
 * OpenAI API key and GitHub API token.
 * Python 3.x installed locally if running without Docker.
